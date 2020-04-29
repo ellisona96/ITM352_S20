@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>    
+
+    //an introduction to using express
+        var express = require('express'); //load the express module code
+        var app = express(); //initialize (start) express and get express pbject
+        app.all('*', function (req, res, next)  {   // response to all HTTP request methods
+            console.log(req.method);
+            next();
+        })
+        app.listen(8080);   //start the server and accept HTTP request from port 8080
+
+    </script>
+</body>
+</html>

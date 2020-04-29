@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var twoDim = [['Bagel', 1.25]['Donut', 1.50]['Veggie', 3.25]['Gyro', 4.00]]
+
+        document.write("<table border=1");
+        outStr = "";
+        for (i = 0; i < twoDim.length; i++) {
+            outStr += "<td>" + twoDim[i][j] + "</td>";
+            for (j = 0; j < twoDim[i].length; j++)  {
+                outStr += "<td>" + twoDim[i][j] + "</td>" 
+            }
+             outStr += "</td>";
+        }
+        outStr += ",/table>";
+        document.write(outStr);
+
+       
+        </script>
+</body>
+</html>
