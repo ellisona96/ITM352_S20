@@ -1,0 +1,148 @@
+<html><head>
+    <script src="products_data.js"></script>
+    <script>
+        //code from lab13: checks if the data entry is valid, must be a number and an integer 
+        function isNonNegInt(q, return_errors = false) {
+            errors = []; //assume no errors at first
+            if (q == '') q = 0; //handle blank inputs as if they are 0
+            if (Number(q) != q) errors.push('<font color="red">Not a number!</font>'); //check if string is a number value
+            else if (q < 0) errors.push('<font color="red">Negative value!</font>'); //check if it is non-negative
+            else if (parseInt(q) != q) errors.push('<font color="red">Not an integer!</font>'); //check that it is an integer
+            return return_errors ? errors : (errors.length == 0);
+        }
+        //informs user if data is valid or invalid
+        function checkQuantityTextbox(theTextbox) {
+            errs = isNonNegInt(theTextbox.value, true);
+            if (errs.length == 0) errs = ['woof!:'];//a valid number displays a woof!
+            if (theTextbox.value.trim() == '') errs = ['Quantity'];
+            document.getElementById(theTextbox.name + '_label').innerHTML = errs.join(", ");
+        }
+    
+        //to load the invoice page
+        window.onload = function () {
+            let params = (new URL(document.location)).searchParams;
+            if (params.has('purchase_submit')) {
+                has_errors = false;
+                total_qty = 0;
+                for (i = 0; i < products.length; i++) {
+                    if (params.has(`quantity${i}`)) {
+                        a_qty = params.get(`quantity${i}`);
+                        product_selection_form[`quantity${i}`].value = a_qty;
+                        total_qty += a_qty;
+                        if (!isNonNegInt(a_qty)) {
+                            has_errors = true;
+                            checkQuantityTextbox(product_selection_form[`quantity${i}`]);
+                        }
+                    }
+                }
+                
+                if (has_errors) {
+                    alert("Please enter only valid quantities!");
+                } else if (total_qty == 0) {
+                    alert("Please select some quantities!");
+                } else {
+                    window.location = `./invoice.html${document.location.search}`;
+                    window.stop;
+                }
+            }
+        }
+    </script>
+    
+    
+    
+    
+    
+        <meta charset="utf-8">
+    
+        <link href="https://fonts.googleapis.com/css?family=Cherry+Swash|Raleway" rel="stylesheet">
+    
+        <link href="style.css" rel="stylesheet">
+        <style>
+        </style>
+    </head>
+    
+    <body>
+        <header>
+            <h1>The Good Boy Gallery</h1>
+        </header>
+        <div>
+            <script>//used form to insert textboox that includes quantity from Assignment 1 example</script>
+    
+            
+                <form name="product_selection_form" action="" method="GET">
+                    
+                    <div>
+                        <main>
+                            <script>
+                                for (i = 0; i < products.length; i++) {
+                                    document.write(`
+                                            <section class="item">
+                                                <center><h2>${products[i].product}</h2>
+                                                <center><p>$${products[i].price}</p>
+                                                <label id="quantity${i}_label"}">Quantity</label>
+                                                <input type="text" placeholder="0" name="quantity${i}" 
+                                                onkeyup="checkQuantityTextbox(this);">
+                                                <img src="./pictures/${products[i].image}">
+                                            </section>
+                                        `);
+                                }    
+                            </script>
+                                            <section class="item">
+                                                <center><h2>Stickers</h2>
+                                                <center><p>$5</p>
+                                                <label id="quantity0_label" }"="">Quantity</label>
+                                                <input type="text" placeholder="0" name="quantity0" onkeyup="checkQuantityTextbox(this);">
+                                                <img src="./pictures/dogSticker.jpg">
+                                            </center></center></section>
+                                        
+                                            <section class="item">
+                                                <center><h2>8x8 Framed Print</h2>
+                                                <center><p>$15</p>
+                                                <label id="quantity1_label" }"="">Quantity</label>
+                                                <input type="text" placeholder="0" name="quantity1" onkeyup="checkQuantityTextbox(this);">
+                                                <img src="./pictures/dogPrint.jpg">
+                                            </center></center></section>
+                                        
+                                            <section class="item">
+                                                <center><h2>18x24 Wall Poster</h2>
+                                                <center><p>$25</p>
+                                                <label id="quantity2_label" }"="">Quantity</label>
+                                                <input type="text" placeholder="0" name="quantity2" onkeyup="checkQuantityTextbox(this);">
+                                                <img src="./pictures/dogPoster.jpg">
+                                            </center></center></section>
+                                        
+                                            <section class="item">
+                                                <center><h2>Life-size Cutout</h2>
+                                                <center><p>$20</p>
+                                                <label id="quantity3_label" }"="">Quantity</label>
+                                                <input type="text" placeholder="0" name="quantity3" onkeyup="checkQuantityTextbox(this);">
+                                                <img src="./pictures/Cutout.jpg">
+                                            </center></center></section>
+                                        
+                                            <section class="item">
+                                                <center><h2>Flag</h2>
+                                                <center><p>$30</p>
+                                                <label id="quantity4_label" }"="">Quantity</label>
+                                                <input type="text" placeholder="0" name="quantity4" onkeyup="checkQuantityTextbox(this);">
+                                                <img src="./pictures/Flag.jpg">
+                                            </center></center></section>
+                                         
+                            
+                            <script>//purchase button to display the invoice</script>
+                          
+                           
+                       
+                        </main>
+                    </div>
+               
+                    <footer> 
+                        <strong> <input type="submit" value="Purchase!" name="purchase_submit"></strong>
+                        <h1>
+                            Your #1 place for good bois!
+                        </h1>
+    
+                    </footer>
+                </form>
+            
+    
+    </div></body></html>
